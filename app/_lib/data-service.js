@@ -114,7 +114,7 @@ export async function getBookedDatesByCabinId(cabinId) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
-
+  console.log(1);
   // Converting to actual dates to be displayed in the date picker
   const bookedDates = data
     .map((booking) => {

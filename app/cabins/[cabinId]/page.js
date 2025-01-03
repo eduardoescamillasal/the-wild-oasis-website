@@ -1,7 +1,10 @@
+import Reservation from "@/app/_components/Reservation";
+import Spinner from "@/app/_components/Spinner";
 import TextExpander from "@/app/_components/TextExpander";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { Suspense } from "react";
 
 // export const metadata = {
 //   title: "Cabin",
@@ -24,6 +27,7 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }) {
   const cabin = await getCabin(params.cabinId);
+
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
 
@@ -74,9 +78,12 @@ export default async function Page({ params }) {
       </div>
 
       <div>
-        <h2 className="text-center text-5xl font-semibold">
-          Reserve today. Pay on arrival.
+        <h2 className="mb-10 text-center text-5xl font-semibold text-accent-400">
+          Reserve {name} today. Pay on arrival.
         </h2>
+        <Suspense fallback={<Spinner />}>
+          <Reservation cabin={cabin} />
+        </Suspense>
       </div>
     </div>
   );
